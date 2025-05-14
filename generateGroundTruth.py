@@ -231,10 +231,29 @@ class FolderAnalyzer():
                 scene.GenerateImage()
 
 
+def use_generateGroundTruth(input_dir: str, output_dir: str, image_params: dict):
+    """
+    Function to ease the use of this script from other python scripts.
+    Takes all the config.json files from a given directory,
+    And generates Ground truth Images.
+    Args:
+        input_dir: path containing root track files
+        output_dir: path to the directory where POCA images will be saved
+        params: contains the parameters for the images
+            size = width and height size in cm
+            px = number of pixels
+        
+    """
+
+    # Run the analysis
+    loader = FolderAnalyzer(input_dir, output_dir, image_params)
+    loader.makeAnalysis()
+
+
 if __name__ == '__main__': 
     """
     Main function. User can introduce the input and output directories using the options -i & -o
-    Will make Gorund Truth images in the output dir for all the Configuration.json files found.
+    Will make Ground Truth images in the output dir for all the Configuration.json files found.
     """
     parser = optparse.OptionParser(usage='usage: %prog [options] path', version='%prog 1.0')                           
     parser.add_option('-i', '--input', action='store', type='string', dest='inputDir', default='.', help='Input directory, contains config.json files')
@@ -244,7 +263,6 @@ if __name__ == '__main__':
 
     image_params = {'size_cm': 25,'px': 512}
     loader = FolderAnalyzer(opts.inputDir, opts.outputDir, image_params)
-    # test = FolderAnalyzer('./ConfigurationFiles', './GroundTruth' )
     loader.makeAnalysis()
 
 

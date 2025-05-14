@@ -69,9 +69,6 @@ class FolderAnalyzer():
     """
     Takes all the .root files from a given directory, several Track.root,
     And generates POCA Images.
-    Args:
-        input_dir   Directory containing Tracks.root
-        output_dir  Goal directory for .png POCA images
     """
     def __init__(self, input_dir: str, output_dir: str, params: dict):
         """
@@ -216,6 +213,26 @@ class RootTrackReader():
             plt.savefig(self.output_full_path, bbox_inches='tight', pad_inches=0)  
 
 
+def use_makePOCA(input_dir: str, output_dir: str, histogram_params: dict):
+    """
+    Function to ease the use of this script from other python scripts.
+    Takes all the .root files from a given directory, several Track.root,
+    And generates POCA Images.
+    Args:
+        input_dir: path containing root track files
+        output_dir: path to the directory where POCA images will be saved
+        params: dictionary with parameters
+                px = number of pixels by side
+                width_cm = scaled width to cover in the image
+                height_cm = scaled height to cover in the image
+                bins = number of bins by side
+        
+    """
+
+    # Run the analysis
+    action = FolderAnalyzer(input_dir, output_dir, histogram_params)
+    action.make_analysis()
+
 
 if __name__ == '__main__': 
     """
@@ -229,7 +246,7 @@ if __name__ == '__main__':
     (opts, args) = parser.parse_args()
 
     # Set the parameters for the POCA histograms
-    histogram_params = {'px': 512, 'width_cm': 15, 'height_cm': 20, 'bins': 150}
+    histogram_params = {'px': 512, 'width_cm': 15, 'height_cm': 15, 'bins': 150}
 
     # Run the analysis
     action = FolderAnalyzer(opts.inputDir, opts.outputDir, histogram_params)
