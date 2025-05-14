@@ -202,7 +202,7 @@ class RootTrackReader():
         ranx_cm = self.params['width_cm'] / 2
         rany_cm = self.params['height_cm'] / 2
 
-        if self.x and self.y:
+        if len(self.x) != 0 and len(self.y) != 0:
 
             # Figsize size in inch, dpi = dots per inch, 
             plt.figure(figsize=(px, px), dpi = 100) 
@@ -229,7 +229,7 @@ if __name__ == '__main__':
     (opts, args) = parser.parse_args()
 
     # Set the parameters for the POCA histograms
-    histogram_params = {'px': 512, 'width_cm': 15, 'height_cm': 15, 'bins': 150}
+    histogram_params = {'px': 512, 'width_cm': 15, 'height_cm': 20, 'bins': 150}
 
     # Run the analysis
     action = FolderAnalyzer(opts.inputDir, opts.outputDir, histogram_params)
